@@ -32,7 +32,7 @@ class CreateUserRequest extends FormRequest
             'password' => 'required',
             'bio' => 'required',
             'twitter' => ['nullable', ''],
-            'profession_id' => Rule::exists('professions', 'id')->where('selectable', true),
+            'profession_id' => Rule::exists('professions', 'id')->whereNull('deleted_at'),
         ];
     }
 
