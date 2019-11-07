@@ -2,14 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Profession;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\Unit\ProviderTest;
 
 class UsersModuleTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected $profession;
 
     /** @test */
     function it_shows_the_users_list()
@@ -77,6 +81,7 @@ class UsersModuleTest extends TestCase
             'name' => 'Duilio',
             'email' => 'duilio@styde.net',
             'password' => '123456',
+            'profession_id' => $this->profession->id,
         ]);
 
         $this->assertDatabaseHas('user_profiles', [
@@ -104,6 +109,28 @@ class UsersModuleTest extends TestCase
         $this->assertDatabaseHas('user_profiles', [
             'bio' => 'Programador de Laravel y Vue.js',
             'twitter' => null ,
+            'user_id' => User::findByEmail('duilio@styde.net')->id,
+        ]);
+    }
+
+    /** @test */
+    function the_profession_id_field_is_optional()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->post('/usuarios/', $this->getValidData([
+            'profession_id' => null
+        ]))->assertRedirect('usuarios');
+
+        $this->assertCredentials([
+            'name' => 'Duilio',
+            'email' => 'duilio@styde.net',
+            'password' => '123456',
+            'profession_id' => null,
+        ]);
+
+        $this->assertDatabaseHas('user_profiles', [
+            'bio' => 'Programador de Laravel y Vue.js',
             'user_id' => User::findByEmail('duilio@styde.net')->id,
         ]);
     }
@@ -173,6 +200,40 @@ class UsersModuleTest extends TestCase
             ]))
             ->assertRedirect('usuarios/nuevo')
             ->assertSessionHasErrors(['password']);
+
+        $this->assertDatabaseEmpty('users');
+    }
+
+    /** @test */
+    function the_profession_must_be_valid()
+    {
+        $this->handleValidationExceptions();
+
+        $this->from('usuarios/nuevo')
+            ->post('/usuarios/', $this->getValidData([
+                'profession_id' => '999',
+            ]))
+            ->assertRedirect('usuarios/nuevo')
+            ->assertSessionHasErrors(['profession_id']);
+
+        $this->assertDatabaseEmpty('users');
+    }
+
+    /** @test */
+    function only_selectable_professions_are_valid()
+    {
+        $nonSelectableProfession = factory(Profession::class)->create([
+            'selectable' => false,
+        ]);
+
+        $this->handleValidationExceptions();
+
+        $this->from('usuarios/nuevo')
+            ->post('/usuarios/', $this->getValidData([
+                'profession_id' => $nonSelectableProfession->id,
+            ]))
+            ->assertRedirect('usuarios/nuevo')
+            ->assertSessionHasErrors(['profession_id']);
 
         $this->assertDatabaseEmpty('users');
     }
@@ -337,10 +398,13 @@ class UsersModuleTest extends TestCase
 
     public function getValidData(array $custom = [])
     {
+        $this->profession = factory(Profession::class)->create();
+
         return array_filter(array_merge([
             'name' => 'Duilio',
             'email' => 'duilio@styde.net',
             'password' => '123456',
+            'profession_id' => $this->profession->id,
             'bio' => 'Programador de Laravel y Vue.js',
             'twitter' => 'https://twitter.com/chechamas'
         ], $custom));
