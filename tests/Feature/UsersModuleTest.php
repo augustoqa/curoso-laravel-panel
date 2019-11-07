@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Profession;
 use App\User;
+use function foo\func;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -64,9 +65,14 @@ class UsersModuleTest extends TestCase
     /** @test */
     function it_loads_the_new_users_page()
     {
+        $profession = factory(Profession::class)->create();
+
         $this->get('/usuarios/nuevo')
             ->assertStatus(200)
-            ->assertSee('Crear usuario');
+            ->assertSee('Crear usuario')
+            ->assertViewHas('professions', function ($professions) use ($profession) {
+                return $professions->contains($profession);
+            });
     }
 
     /** @test */
@@ -81,20 +87,20 @@ class UsersModuleTest extends TestCase
             'name' => 'Duilio',
             'email' => 'duilio@styde.net',
             'password' => '123456',
-            'profession_id' => $this->profession->id,
         ]);
 
         $this->assertDatabaseHas('user_profiles', [
             'bio' => 'Programador de Laravel y Vue.js',
             'twitter' => 'https://twitter.com/chechamas',
             'user_id' => User::findByEmail('duilio@styde.net')->id,
+            'profession_id' => $this->profession->id,
         ]);
     }
 
     /** @test */
     function the_twitter_field_is_optional()
     {
-        $this->withoutExceptionHandling();
+        $this->withExceptionHandling();
 
         $this->post('/usuarios/', $this->getValidData([
             'twitter' => null
@@ -108,7 +114,7 @@ class UsersModuleTest extends TestCase
 
         $this->assertDatabaseHas('user_profiles', [
             'bio' => 'Programador de Laravel y Vue.js',
-            'twitter' => null ,
+            'twitter' => null,
             'user_id' => User::findByEmail('duilio@styde.net')->id,
         ]);
     }
@@ -126,12 +132,12 @@ class UsersModuleTest extends TestCase
             'name' => 'Duilio',
             'email' => 'duilio@styde.net',
             'password' => '123456',
-            'profession_id' => null,
         ]);
 
         $this->assertDatabaseHas('user_profiles', [
             'bio' => 'Programador de Laravel y Vue.js',
             'user_id' => User::findByEmail('duilio@styde.net')->id,
+            'profession_id' => null,
         ]);
     }
 
@@ -400,14 +406,14 @@ class UsersModuleTest extends TestCase
     {
         $this->profession = factory(Profession::class)->create();
 
-        return array_filter(array_merge([
+        return array_merge([
             'name' => 'Duilio',
             'email' => 'duilio@styde.net',
             'password' => '123456',
             'profession_id' => $this->profession->id,
             'bio' => 'Programador de Laravel y Vue.js',
             'twitter' => 'https://twitter.com/chechamas'
-        ], $custom));
+        ], $custom);
     }
 }
 
