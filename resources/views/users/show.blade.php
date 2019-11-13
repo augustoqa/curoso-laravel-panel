@@ -1,14 +1,35 @@
 @extends('layout')
 
-@section('title', "Usuario {$user->id}")
+@section('title', "{$user->id}")
 
 @section('content')
-    <h1>Usuario #{{ $user->id }}</h1>
-
-    <p>Nombre del usuario: {{ $user->name }}</p>
-    <p>Correo electrónico: {{ $user->email }}</p>
+    <div class="d-flex justify-content-between align-items-end mb-3">
+        <h1 class="pb-1">{{ $user->name }}</h1>
+    </div>
 
     <p>
-        <a href="{{ route('users.index') }}">Regresar al listado de usuarios</a>
+        <a href="{{ route('users.index') }}" class="btn btn-outline-dark btn-sm">Regresar al listado</a>
     </p>
+
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header">
+                    Detalles
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">ID del usuario: {{ $user->id }}</h5>
+                    <div class="card-text">
+                        <p><strong>Correo electrónico</strong>: {{ $user->email }}</p>
+                        <p><strong>Rol</strong>: {{ $user->role }}</p>
+                        <p><strong>Fecha de registro</strong>: {{ $user->created_at }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+        </div>
+    </div>
+    <br>
 @endsection
