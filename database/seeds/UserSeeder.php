@@ -31,9 +31,9 @@ class UserSeeder extends Seeder
         ]);
 
         factory(User::class, 29)->create()->each(function ($user) {
-            $user->profile()->create(
-                factory(\App\UserProfile::class)->raw()
-            );
+            factory(\App\UserProfile::class)->create([
+                'user_id' => $user->id,
+            ]);
         });
     }
 }
