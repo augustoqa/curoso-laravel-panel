@@ -43,7 +43,8 @@ class UserSeeder extends Seeder
     {
         $admin = factory(User::class)->create([
             'team_id' => $this->teams->firstWhere('name', 'Styde')->id,
-            'name' => 'Cesar Acual',
+            'first_name' => 'Cesar',
+            'last_name' => 'Acual',
             'email' => 'checha@mail.net',
             'password' => bcrypt('laravel'),
             'role' => 'admin',
