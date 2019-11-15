@@ -4,10 +4,11 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\TestResponse;
+use phpDocumentor\Reflection\Types\Parent_;
 
 abstract class TestCase extends BaseTestCase
 {
-    use CreatesApplication, TestHelpers;
+    use CreatesApplication, TestHelpers, DetectRepeatedQueries;
 
     protected $defaultData = [];
 
@@ -18,6 +19,15 @@ abstract class TestCase extends BaseTestCase
         $this->addTestResponseMacros();
 
         $this->withoutExceptionHandling();
+
+        $this->enableQueryLog();
+    }
+
+    public function tearDown()
+    {
+        $this->flushQueryLog();
+
+        parent::tearDown();
     }
 
     protected function addTestResponseMacros()
