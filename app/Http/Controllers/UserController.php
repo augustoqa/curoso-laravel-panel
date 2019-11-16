@@ -10,20 +10,16 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::query()
-            ->with('team')
-            ->when(request('team'), function ($query, $team) {
-                if ($team === 'with_team') {
-                    $query->has('team');
-                } else if ($team === 'without_team') {
-                    $query->doesntHave('team');
-                }
-            })
-            ->search(request('search'))
-            ->orderByDesc('created_at')
-            ->paginate();
+        if (request('search')) {
+            $q = User::search(request('search'));
+        } else {
+            $q = User::query();
+        }
 
-        $users->appends(request(['search']));
+        $users = $q->paginate()
+            ->appends(request(['search']));
+
+        $users->load('team');
 
         $title = 'Listado de usuarios';
 
