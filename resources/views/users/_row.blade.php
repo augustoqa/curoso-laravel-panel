@@ -1,15 +1,14 @@
 <tr>
-    <td>{{ $user->id }}</td>
+    <td rowspan="2">{{ $user->id }}</td>
     <th scope="row">
-        {{ $user->name }}
+        {{ $user->name }} {{ $user->status }} <span class="status st-active"></span> <span class="status st-inactive"></span>
+        <span class="note">{{ $user->team->name }}</span>
     </th>
-    <td>{{ $user->team->name }}</td>
     <td>{{ $user->email }}</td>
-    <td>{{ $user->role }}</td>
-{{--    <td>--}}
-{{--        <span class="note">Registro: {{ $user->created_at->format('d/m/Y') }}</span>--}}
-{{--        <span class="note">Último login: {{ $user->created_at->format('d/m/Y') }}</span>--}}
-{{--    </td>--}}
+    <td>
+        <span class="note">Registro: {{ $user->created_at->format('d/m/Y') }}</span>
+        <span class="note">Último login: {{ $user->created_at->format('d/m/Y') }}</span>
+    </td>
     <td class="text-right">
         @if ($user->trashed())
             <form action="{{ route('users.destroy', $user) }}" method="POST">
@@ -28,9 +27,9 @@
         @endif
     </td>
 </tr>
-{{--<tr class="skills">--}}
-{{--    <td colspan="1">--}}
-{{--        <span class="note">{{ $user->profile->profession->title }}</span>--}}
-{{--    </td>--}}
-{{--    <td colspan="4"><span class="note">{{ $user->skills->implode('name', ', ') ?: 'Sin habilidades :(' }}</span></td>--}}
-{{--</tr>--}}
+<tr class="skills">
+    <td colspan="1">
+        <span class="note">{{ $user->profile->profession->title }}</span>
+    </td>
+    <td colspan="4"><span class="note">{{ $user->skills->implode('name', ', ') ?: 'Sin habilidades :(' }}</span></td>
+</tr>

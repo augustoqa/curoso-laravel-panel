@@ -111,6 +111,28 @@ body {
   }
 }
 
+.select-field {
+  appearance: none;
+  border: 1px solid #6c757d;
+  color: #fff;
+  border-radius: .2rem;
+  border: 0;
+  margin: 0;
+  padding: .25rem 24px .25rem .5rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  box-shadow: none;
+  outline: 0;
+  height: 30px;
+  background: {
+    color: #6c757d;
+    image: url('../images/select-arrow.png');
+    size: 20px 4px;
+    position: 100% 50%;
+    repeat: no-repeat;
+  }
+}
+
 .skills-list {
   position: absolute;
   z-index: 1;
@@ -153,5 +175,36 @@ body {
   .form-check {
     padding: 8px 24px 8px 32px;
     height: 40px;
+  }
+}
+
+.status {
+  display: inline-block;
+  margin: 0 0 0 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 5px;
+
+  &.st-active {
+    background-color: green;
+  }
+
+  &.st-inactive {
+    background-color: red;
+  }
+}
+
+.gj-datepicker-bootstrap [role="right-icon"] button {
+  background-color: #5a6268;
+
+  &:hover {
+    background-color: mix(#000, #5a6268, 20%);
+  }
+
+  .material-icons,
+  .gj-icon {
+    font-size: 18px;
+    top: 6px;
+    color: #fff;
   }
 }

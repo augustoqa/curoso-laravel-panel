@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
-use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
     //protected $table = 'users';
 
-    use Notifiable, SoftDeletes, Searchable;
+    use Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -68,20 +67,20 @@ class User extends Authenticatable
         ];
     }
 
-//    public function scopeSearch($query, $search)
-//    {
-//        if (empty($search)) {
-//            return;
-//        }
-//
-//        $query->where(function ($query) use ($search) {
-//            $query->where('first_name', 'like', "%{$search}%")
-//                ->orWhere('email', 'like', "%{$search}%")
-//                ->orWhereHas('team', function ($query) use ($search) {
-//                    $query->where('name', 'like', "%{$search}%");
-//                });
-//        });
-//    }
+    public function scopeSearch($query, $search)
+    {
+        if (empty($search)) {
+            return;
+        }
+
+        $query->where(function ($query) use ($search) {
+            $query->where('first_name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhereHas('team', function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+        });
+    }
 
     public function getNameAttribute()
     {
