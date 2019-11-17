@@ -1,12 +1,12 @@
 <form method="get" action="{{ url('usuarios') }}">
     <div class="row row-filters">
         <div class="col-12">
-            @foreach(['' => 'Todos', 'with_team' => 'Con equipo', 'without_team' => 'Sin equipo'] as $value => $text)
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="team"
-                       id="team_{{ $value ?: 'all' }}" value="{{ $value }}" {{ $value == request('team') ? 'checked' : '' }}>
-                <label class="form-check-label" for="team_{{ $value ?: 'all' }}">{{ $text }}</label>
-            </div>
+            @foreach($states as $value => $text)
+                <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check" name="state"
+                           id="state_{{ $value }}" value="{{ $value }}" {{ $value == request('state') ? 'checked' : '' }} }}>
+                    <label class="form-check-label" for="state_{{ $value }}">{{ $text }}</label>
+                </div>
             @endforeach
         </div>
     </div>
