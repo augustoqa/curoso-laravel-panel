@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\{Skill, User};
 use App\Http\Forms\UserForm;
 use App\Http\Requests\{CreateUserRequest, UpdateUserRequest};
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $users = User::query()
             ->with('team', 'skills', 'profile.profession')
-            ->byState(request('state'))
-            ->byRole(request('role'))
-            ->search(request('search'))
+            ->filterBy($request->all(['state', 'role', 'search']))
             ->orderByDesc('created_at')
             ->paginate();
 
