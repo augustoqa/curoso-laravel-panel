@@ -23,7 +23,6 @@ class UserForm implements Responsable
             'user' => $this->user,
             'professions' => Profession::orderBy('title', 'ASC')->get(),
             'skills' => Skill::orderBy('name', 'ASC')->get(),
-            'roles' => trans('users.roles'),
         ]);
     }
 }
