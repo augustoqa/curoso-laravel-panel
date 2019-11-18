@@ -22,9 +22,16 @@ $factory->define(App\User::class, function (Faker $faker) {
         'password' => '$2y$10$m00MRzJOBWYa71juP4IiZuT9.hangut0d6RdDSfwO.BVfxNEJ4jhO',
         'remember_token' => str_random(10),
         'role' => 'user',
+        'active' => true,
     ];
 });
 
 $factory->afterCreating(App\User::class, function ($user, $faker) {
     $user->profile()->save(factory(App\UserProfile::class)->make());
+});
+
+$factory->state(App\User::class, 'inactive', function ($faker) {
+    return [
+        'active' => false,
+    ];
 });

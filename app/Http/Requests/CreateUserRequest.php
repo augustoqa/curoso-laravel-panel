@@ -43,6 +43,9 @@ class CreateUserRequest extends FormRequest
                 'array',
                 Rule::exists('skills', 'id'),
             ],
+            'state' => [
+                Rule::in(['active', 'inactive']),
+            ],
         ];
     }
 
@@ -56,14 +59,13 @@ class CreateUserRequest extends FormRequest
     public function createUser()
     {
         DB::transaction(function () {
-            $user = new User();
-
-            $user->forceFill([
+            $user = User::create([
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
                 'email' => $this->email,
                 'password' => bcrypt($this->password),
                 'role' => $this->role ?? 'user',
+                'state' => $this->state,
             ]);
 
             $user->save();
