@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$m00MRzJOBWYa71juP4IiZuT9.hangut0d6RdDSfwO.BVfxNEJ4jhO',
-        'remember_token' => str_random(10),
+        'remember_token' => Str::random(10),
         'role' => 'user',
         'active' => true,
     ];
