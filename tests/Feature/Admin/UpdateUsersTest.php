@@ -14,8 +14,7 @@ class UpdateUsersTest extends TestCase
     use RefreshDatabase;
 
     protected $defaultData = [
-        'first_name' => 'Cesar',
-        'last_name' => 'Acual',
+        'name' => 'Cesar Acual',
         'email' => 'duilio@styde.net',
         'password' => '123456',
         'profession_id' => '',
@@ -64,8 +63,7 @@ class UpdateUsersTest extends TestCase
         ]))->assertRedirect("/usuarios/{$user->id}");
 
         $this->assertCredentials([
-            'first_name' => 'Cesar',
-            'last_name' => 'Acual',
+            'name' => 'Cesar Acual',
             'email' => 'duilio@styde.net',
             'password' => '123456',
             'role' => 'admin',
@@ -108,7 +106,7 @@ class UpdateUsersTest extends TestCase
     }
 
     /** @test */
-    function the_first_name_is_required()
+    function the_name_is_required()
     {
         $this->handleValidationExceptions();
 
@@ -116,27 +114,10 @@ class UpdateUsersTest extends TestCase
 
         $this->from("usuarios/{$user->id}/editar")
             ->put("usuarios/{$user->id}", $this->withData([
-                'first_name' => '',
+                'name' => '',
             ]))
             ->assertRedirect("usuarios/{$user->id}/editar")
-            ->assertSessionHasErrors(['first_name']);
-
-        $this->assertDatabaseMissing('users', ['email' => 'duilio@styde.net']);
-    }
-
-    /** @test */
-    function the_last_name_is_required()
-    {
-        $this->handleValidationExceptions();
-
-        $user = factory(User::class)->create();
-
-        $this->from("usuarios/{$user->id}/editar")
-            ->put("usuarios/{$user->id}", $this->withData([
-                'last_name' => '',
-            ]))
-            ->assertRedirect("usuarios/{$user->id}/editar")
-            ->assertSessionHasErrors(['last_name']);
+            ->assertSessionHasErrors(['name']);
 
         $this->assertDatabaseMissing('users', ['email' => 'duilio@styde.net']);
     }
@@ -155,7 +136,7 @@ class UpdateUsersTest extends TestCase
             ->assertRedirect("usuarios/{$user->id}/editar")
             ->assertSessionHasErrors(['email']);
 
-        $this->assertDatabaseMissing('users', ['first_name' => 'Cesar']);
+        $this->assertDatabaseMissing('users', ['name' => 'Cesar Acual']);
     }
 
     /** @test */
@@ -190,13 +171,13 @@ class UpdateUsersTest extends TestCase
 
         $this->from("usuarios/{$user->id}/editar")
             ->put("usuarios/{$user->id}", $this->withData([
-                'first_name' => 'Cesar',
+                'name' => 'Cesar Acual',
                 'email' => 'duilio@styde.net',
             ]))
             ->assertRedirect("usuarios/{$user->id}"); // (users.show)
 
         $this->assertDatabaseHas('users', [
-            'first_name' => 'Cesar',
+            'name' => 'Cesar Acual',
             'email' => 'duilio@styde.net',
         ]);
     }
@@ -217,7 +198,7 @@ class UpdateUsersTest extends TestCase
             ->assertRedirect("usuarios/{$user->id}"); // (users.show)
 
         $this->assertCredentials([
-            'first_name' => 'Cesar',
+            'name' => 'Cesar Acual',
             'email' => 'duilio@styde.net',
             'password' => $oldPassword // VERY IMPORTANT!
         ]);

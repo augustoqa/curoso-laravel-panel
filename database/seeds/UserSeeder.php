@@ -4,9 +4,7 @@ use App\Skill;
 use App\Team;
 use App\User;
 use App\Profession;
-use App\UserProfile;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -25,7 +23,7 @@ class UserSeeder extends Seeder
 
         $this->createAdmin();
 
-        foreach (range(1, 999) as $i) {
+        foreach (range(1, 499) as $i) {
             $this->createRandomUser();
         }
     }
@@ -43,8 +41,7 @@ class UserSeeder extends Seeder
     {
         $admin = factory(User::class)->create([
             'team_id' => $this->teams->firstWhere('name', 'Styde')->id,
-            'first_name' => 'Cesar',
-            'last_name' => 'Acual',
+            'name' => 'Cesar Acual',
             'email' => 'checha@mail.net',
             'password' => bcrypt('laravel'),
             'role' => 'admin',

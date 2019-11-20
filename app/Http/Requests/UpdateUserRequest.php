@@ -17,8 +17,7 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required',
             'email' => [
                 'required', 'email',
                 Rule::unique('users')->ignore($this->user)
@@ -44,8 +43,7 @@ class UpdateUserRequest extends FormRequest
     public function updateUser(User $user)
     {
         $user->forceFill([
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
+            'name' => $this->name,
             'email' => $this->email,
             'role' => $this->role,
             'state' => $this->state,

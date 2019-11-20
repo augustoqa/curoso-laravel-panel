@@ -28,8 +28,7 @@ class CreateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'name' => 'required',
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => 'required',
             'role' => ['nullable', Rule::in(Role::getList())],
@@ -60,8 +59,7 @@ class CreateUserRequest extends FormRequest
     {
         DB::transaction(function () {
             $user = User::create([
-                'first_name' => $this->first_name,
-                'last_name' => $this->last_name,
+                'name' => $this->name,
                 'email' => $this->email,
                 'password' => bcrypt($this->password),
                 'role' => $this->role ?? 'user',

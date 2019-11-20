@@ -20,8 +20,7 @@ class CreateUserTest extends DuskTestCase
 
         $this->browse(function (Browser $browser) use ($profession, $skillA, $skillB) {
             $browser->visit('usuarios/nuevo')
-                ->type('first_name', 'Cesar')
-                ->type('last_name', 'Acual')
+                ->type('name', 'Cesar Acual')
                 ->type('email', 'checha@gmail.com')
                 ->type('password', 'laravel')
                 ->type('bio', 'Programador')
@@ -38,8 +37,7 @@ class CreateUserTest extends DuskTestCase
         });
 
         $this->assertCredentials([
-            'first_name' => 'Cesar',
-            'last_name' => 'Acual',
+            'name' => 'Cesar Acual',
             'email' => 'checha@gmail.com',
             'password' => 'laravel',
             'role' => 'user',
