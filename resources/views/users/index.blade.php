@@ -21,16 +21,14 @@
 
     @if ($users->isNotEmpty())
 
-        <p>Viendo página {{ $users->currentPage() }} de {{ $users->lastPage() }}</p>
-
         <div class="table-responsive-lg">
             <table class="table table-sm">
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col"># <span class="oi oi-caret-bottom"></span><span class="oi oi-caret-top"></span></th>
-                    <th scope="col" class="sort-desc">Nombre <span class="oi oi-caret-bottom"></span><span class="oi oi-caret-top"></span></th>
-                    <th scope="col">Correo <span class="oi oi-caret-bottom"></span><span class="oi oi-caret-top"></span></th>
-                    <th scope="col">Fechas <span class="oi oi-caret-bottom"></span><span class="oi oi-caret-top"></span></th>
+                    <th scope="col"><a href="#" class="{{ $sortable->classes('name') }}">Nombre <i class="icon-sort"></i></a></th>
+                    <th scope="col"><a href="#" class="{{ $sortable->classes('email') }}">Correo <i class="icon-sort"></i></a></th>
+                    <th scope="col"><a href="#" class="{{ $sortable->classes('created_at') }}">Fechas <i class="icon-sort"></i></th>
                     <th scope="col" class="text-right th-actions">Acciones</th>
                 </tr>
                 </thead>
@@ -38,6 +36,8 @@
                     @each('users._row', $users, 'user')
                 </tbody>
             </table>
+
+            <p>Viendo página {{ $users->currentPage() }} de {{ $users->lastPage() }}</p>
 
         {{ $users->render() }}
         </div>

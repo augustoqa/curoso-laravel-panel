@@ -175,3 +175,60 @@ body {
     top: 6px;
     color: #fff;
 }
+
+.link-sortable {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding-right: 16px;
+    opacity: 0.8;
+}
+
+.link-sortable .icon-sort {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    -webkit-transform: translateY(1px);
+    transform: translateY(1px);
+    background-image: url(/images/sortable.png);
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
+    background-size: 12px 12px;
+}
+
+.link-sortable:hover {
+    text-decoration: underline;
+    color: #fff;
+    opacity: 1;
+}
+
+.link-sortable.link-sorted-up .icon-sort {
+    background-image: url(/images/sorted-up.png);
+}
+
+.link-sortable.link-sorted-down .icon-sort {
+    background-image: url(/images/sorted-down.png);
+}
+
+.footer {
+    margin-top: 2rem;
+    background-color: #e0eaf1;
+    padding: 1rem 0;
+    color: rgba(99, 107, 111, 0.75);
+    -webkit-box-shadow: 0 2px 6px inset rgba(142, 180, 203, 0.5);
+    box-shadow: 0 2px 6px inset rgba(142, 180, 203, 0.5);
+}
+
+@media (min-width: 980px) {
+    main.container {
+        min-height: 80vh;
+    }
+
+    .card-body {
+        padding: 1.25rem 2.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+    }
+}

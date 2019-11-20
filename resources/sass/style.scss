@@ -208,3 +208,61 @@ body {
     color: #fff;
   }
 }
+
+// Sortable tables
+.link-sortable {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding-right: 16px;
+  opacity: 0.8;
+
+  .icon-sort {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    transform: translateY(1px);
+    background: {
+      image: url('../images/sortable.png');
+      repeat: no-repeat;
+      position: 100% 50%;
+      size: 12px 12px;
+    }
+  }
+
+  &:hover {
+    text-decoration: underline;
+    color: #fff;
+    opacity: 1;
+  }
+
+  &.link-sorted-up .icon-sort {
+    background-image: url('../images/sorted-up.png');
+  }
+
+  &.link-sorted-down .icon-sort {
+    background-image: url('../images/sorted-down.png');
+  }
+}
+
+.footer {
+  margin-top: 2rem;
+  background-color: mix($body-bg, $brand-info, 80%);
+  padding: 1rem 0;
+  color: rgba($text-color, 0.75);
+  box-shadow: 0 2px 6px inset rgba($brand-info, 0.5);
+}
+
+@media (min-width: 980px) {
+  main.container {
+    min-height: 80vh;
+  }
+
+  .card-body {
+    padding: 1.25rem 2.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 2rem;
+  }
+}
