@@ -66,11 +66,6 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
-    public function scopeFilterBy($query, QueryFilter $filters, array $data)
-    {
-        return $filters->applyTo($query, $data);
-    }
-
     public function toSearchableArray()
     {
         return [

@@ -9,18 +9,16 @@ use App\Http\Requests\{CreateUserRequest, UpdateUserRequest};
 
 class UserController extends Controller
 {
-    public function index(Request $request, UserFilter $filters, Sortable $sortable)
+    public function index(Request $request, Sortable $sortable)
     {
         $users = User::query()
             ->with('team', 'skills', 'profile.profession')
             ->onlyTrashedIf($request->routeIs('users.trashed'))
-            ->filterBy($filters, $request->only(['state', 'role', 'search', 'skills', 'from', 'to', 'order']))
+            ->applyFilter()
             ->orderByDesc('created_at')
             ->paginate();
 
-        $users->appends($filters->valid());
-
-        $sortable->appends($filters->valid());
+        $sortable->appends($users->parameters());
 
         return view('users.index', [
             'view' => $request->routeIs('users.trashed') ? 'trash' : 'index',
