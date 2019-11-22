@@ -1,5 +1,6 @@
 <?php
 
+use App\Login;
 use App\Skill;
 use App\Team;
 use App\User;
@@ -69,6 +70,10 @@ class UserSeeder extends Seeder
 
         $user->profile->update([
             'profession_id' => rand(0, 2) ? $this->professions->random()->id : null,
+        ]);
+
+        factory(Login::class)->times(rand(1, 20))->create([
+            'user_id' => $user->id,
         ]);
     }
 }
