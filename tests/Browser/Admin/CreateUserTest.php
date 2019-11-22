@@ -2,7 +2,9 @@
 
 namespace Tests\Browser\Admin;
 
-use App\{Profession, Skill, User};
+use App\Profession;
+use App\Skill;
+use App\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;

@@ -52,7 +52,7 @@ class FilterUsersTest extends TestCase
             ->notContains($user);
     }
 
-     /** @test */
+    /** @test */
     function filter_users_by_role_user()
     {
         $admin = factory(User::class)->create(['role' => 'admin']);

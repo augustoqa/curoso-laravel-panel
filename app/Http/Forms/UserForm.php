@@ -4,7 +4,9 @@
 namespace App\Http\Forms;
 
 use Illuminate\Contracts\Support\Responsable;
-use App\{Profession, Skill, User};
+use App\Profession;
+use App\Skill;
+use App\User;
 
 class UserForm implements Responsable
 {

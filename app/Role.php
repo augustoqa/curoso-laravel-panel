@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 class Role
 {
     public static function getList()

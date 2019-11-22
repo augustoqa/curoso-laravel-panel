@@ -3,7 +3,6 @@
 
 namespace App\Http\ViewComponents;
 
-
 use App\Profession;
 use App\Skill;
 use App\User;

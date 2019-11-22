@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{Skill, Sortable, User, UserFilter};
+use App\Skill;
+use App\Sortable;
+use App\User;
+use App\UserFilter;
 use App\Http\Forms\UserForm;
-use App\Http\Requests\{CreateUserRequest, UpdateUserRequest};
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {

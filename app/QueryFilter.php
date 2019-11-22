@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 

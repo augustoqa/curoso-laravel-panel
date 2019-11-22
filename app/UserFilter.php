@@ -3,7 +3,6 @@
 
 namespace App;
 
-
 use App\Rules\SortableColumn;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
